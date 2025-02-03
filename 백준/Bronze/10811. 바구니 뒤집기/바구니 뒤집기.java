@@ -15,10 +15,12 @@ public class Main {
             int a = sc.nextInt() - 1;
             int b = sc.nextInt() - 1;
 
-            for (int j = 0; j <= (b - a) / 2; j++) {
-                int temp = arr[a + j];
-                arr[a + j] = arr[b - j];
-                arr[b - j] = temp;
+            while (a < b) {
+                int temp = arr[a];
+                arr[a] = arr[b];
+                arr[b] = temp;
+                a++;
+                b--;
             }
         }
 
