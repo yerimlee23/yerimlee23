@@ -14,12 +14,14 @@ public class Main {
             String user = br.readLine();
 
             if (user.equals("ENTER")) {
+                count += set.size();
                 set.clear();
-            } else if (!set.contains(user)) {
-                set.add(user);
-                count++;
+            } else {
+                set.add(user); 
             }
         }
+
+        count += set.size();
 
         bw.write(count + "\n");
 
