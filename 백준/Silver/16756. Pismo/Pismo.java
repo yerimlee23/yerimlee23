@@ -4,7 +4,6 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
         int[] arr = new int[N];
@@ -21,9 +20,6 @@ public class Main {
             min = Math.min(min, Math.abs(arr[i] - arr[i - 1]));
         }
 
-        bw.write(min + "\n");
-
-        bw.flush();
-        bw.close();
+        System.out.println(min);
     }
 }
