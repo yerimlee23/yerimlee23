@@ -35,7 +35,11 @@ public class Main {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 2; j++) {
                 if (count[i][j] > K) {
-                    room += count[i][j] / K + 1;
+                    if (count[i][j] % K != 0) {
+                        room += count[i][j] / K + 1;
+                    } else {
+                        room += count[i][j] / K;
+                    }
                 } else if (1 <= count[i][j] && count[i][j] <= K) {
                     room++;
                 }
