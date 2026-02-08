@@ -1,26 +1,34 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int[][] totalArea = new int[100][100]; //전체 영역
-        int paperNum = sc.nextInt(); //색종이 개수
-        int paperArea = 0; //색종이를 붙인 영역
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        for (int i = 0; i < paperNum; i++) {
-            int x = sc.nextInt();
-            int y = sc.nextInt();
-
-            for (int j = x; j < x + 10; j++) {
-                for (int k = y; k < y + 10; k++) {
-                    if (totalArea[j][k] == 0) { //빈 공간(영역)일 경우
-                        totalArea[j][k] = 1; //색종이를 붙인 영역을 1로 표시
-                        paperArea++; //색종이를 붙인 영역 1씩 추가
-                    }
-                }
-            }
-        }
-
-        System.out.println(paperArea);
-    }
+		int tc = Integer.parseInt(br.readLine());
+		int[][] map = new int[100][100];
+		int sum = 0;
+		
+		for (int i = 0; i < tc; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+			
+			for (int j = x; j < x + 10; j++) {
+				for (int k = y; k < y + 10; k++) {
+					map[j][k]++;
+				}
+			}
+		}
+		
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map.length; j++) {
+				if (map[i][j] != 0) sum++;
+			}
+		}
+		
+		bw.write(sum + "");
+		bw.flush();
+	}
 }
