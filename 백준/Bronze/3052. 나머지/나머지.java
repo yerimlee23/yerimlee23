@@ -1,20 +1,23 @@
-import java.util.HashSet;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int[] arr = new int[10];
-        HashSet<Integer> overlapRemove = new HashSet<>();
-
-        for (int i = 0; i < 10; i++) {
-            int num = sc.nextInt();
-            int remain = num % 42;
-            arr[i] = remain;
-            overlapRemove.add(arr[i]);
-        }
-
-        System.out.println(overlapRemove.size());
-    }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		Set<Integer> set = new HashSet<>();
+		
+		for (int i = 0; i < 10; i++) {
+			int num = Integer.parseInt(br.readLine());
+			
+			if (num < 42)
+				set.add(num);
+			else
+				set.add(num % 42);
+		}
+		
+		bw.write(set.size() + "\n");
+		bw.flush();
+	}
 }
