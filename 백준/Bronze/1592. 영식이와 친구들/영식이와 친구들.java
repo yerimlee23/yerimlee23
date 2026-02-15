@@ -1,43 +1,37 @@
-//20260201
-//백준 브론즈2 1592 영식이와친구들
-
 import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); //사람 수
-        int M = Integer.parseInt(st.nextToken()); //공 받은 횟수
-        int L = Integer.parseInt(st.nextToken()); //공 던지는 규칙
-        br.close();
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken()); // 자리 수
+		int end = Integer.parseInt(st.nextToken()); // 종료조건 (공을 end번 받으면 게임 종료)
+		int next = Integer.parseInt(st.nextToken()); // 공을 받을 자리 번호
 
-        int[] ballCatch = new int[N]; //공 받는 횟수 배열
-        int count = 0; //공 던지는 횟수(정답)
-        int num = 0; //현재 공을 가지고 있는 번호
-        
+		int[] catchBall = new int[n]; // 공 받은 횟수 배열
+		int count = 0; // 공 던지는 전체 횟수
+		int curIdx = 0; // 현재 공 받은 자리
 
-        ballCatch[num]++; //처음에 1번(index 0)이 공을 받는다
+		while (true) {
+			if (catchBall[curIdx] == end) {
+				count--;
+				break;
+			} else {
+				if (catchBall[curIdx] % 2 == 0) { // 공 받은 횟수가 짝수일 때
+					curIdx = (curIdx + next) % n;
+				} else { // 공 받은 횟수가 홀수일 때
+					curIdx = (curIdx - next + n) % n;
+				}
 
-        //공 받은 횟수가 M이 아닐 때만 실행
-        while (ballCatch[num] != M) {
-            //현재 공 받은 횟수가 홀수이면 시계 방향으로 L번째 있는 사람이 공을 받는다
-            if (ballCatch[num] % 2 != 0) {
-                num = (num + L) % N;
-            } else {
-                //현재 공 받은 횟수가 짝수이면 반시계 방향으로 L번째 있는 사람이 공을 받는다
-                num = (num - L + N) % N;
-            }
+				catchBall[curIdx]++;
+				count++;
+			}
+		}
 
-            ballCatch[num]++;
-            count++;
-        }
-        
-        bw.write(count +"\n");
-        bw.flush();
-        bw.close();
-    }
+		bw.write(count + "");
+		bw.flush();
+	}
 }
