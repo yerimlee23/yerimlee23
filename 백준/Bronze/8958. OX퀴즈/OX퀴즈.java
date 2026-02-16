@@ -1,36 +1,30 @@
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int T = Integer.parseInt(br.readLine());
-        String[] result = new String[T];
+		int tc = Integer.parseInt(br.readLine());
+		
+		for (int i = 0; i < tc; i++) {
+			String arr = br.readLine();
+			int score = 0;
+			int count = 0; // 누적합
 
-        for (int i = 0; i < T; i++) {
-            result[i] = br.readLine();
-        }
-
-        br.close();
-
-        for (int i = 0; i < T; i++) {
-            int score = 0;
-            int count = 0;
-
-            for (int j = 0; j < result[i].length(); j++) {
-                if (result[i].charAt(j) == 'O') {
-                    count++;
-                    score += count;
-                } else {
-                    count = 0;
-                }
-            }
-
-            bw.write(score + "\n");
-        }
-
-        bw.flush();
-        bw.close();
-    }
+			for (int j = 0; j < arr.length(); j++) {
+				if (arr.charAt(j) == 'O') {
+					count++;
+				} else {
+					count = 0; //누적합 초기화
+				}
+				
+				score += count;
+			}
+			
+			bw.write(score + "\n");
+		}
+		
+		bw.flush();
+	}
 }
