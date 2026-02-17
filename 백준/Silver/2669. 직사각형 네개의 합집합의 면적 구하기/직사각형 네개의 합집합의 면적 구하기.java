@@ -1,38 +1,37 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
-		int[][] arr = new int[101][101];
-		int area = 0;
+
+		int[][] map = new int[100][100];
+		int count = 0;
 		
 		for (int i = 0; i < 4; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			int d = Integer.parseInt(st.nextToken());
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+			int p = Integer.parseInt(st.nextToken());
+			int q = Integer.parseInt(st.nextToken());
 			
-			for (int j = a+1; j <= c; j++) {
-				for (int k = b+1; k <= d; k++) {
-					arr[j][k] = 1;
+			for (int j = x; j < p; j++) {
+				for (int k = y; k < q; k++) {
+					map[j][k] = 1;
 				}
 			}
 		}
 		
-		br.close();
-		
-		for (int i = 1; i <= 100; i++) {
-			for (int j = 1; j <= 100; j++) {
-				area += arr[i][j];
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map.length; j++) {
+				if (map[i][j] == 1) {
+					count++;
+				}
 			}
 		}
 		
-		bw.write(area + "\n");
+		bw.write(count + "");
 		bw.flush();
-		bw.close();
 	}
 }
