@@ -6,23 +6,22 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		PriorityQueue<Integer> pq = new PriorityQueue<>(); //오름차순 정렬
+		PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder()); //내림차순 정렬
 		
 		int n = Integer.parseInt(br.readLine());
 		
 		for (int i = 0; i < n; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < n; j++) {
-				int num = Integer.parseInt(st.nextToken());
-				pq.add(num);
-				
-				if (pq.size() > n) {
-					pq.poll(); //가장 작은 원소 제거
-				}
+				pq.add(Integer.parseInt(st.nextToken()));
 			}
 		}
 		
-		bw.write(pq.peek() + "");
+		for (int i = 0; i < n - 1; i++) {
+			pq.poll();
+		}
+		
+		bw.write(pq.poll() + "");
 		bw.flush();
 	}
 }
