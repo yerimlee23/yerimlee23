@@ -1,17 +1,15 @@
+//DP bottom-top 방식
+
 import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int n;
-	static int[][] map;
-	static int count = 0;
-	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		n = Integer.parseInt(br.readLine());
-		map = new int[n + 1][n + 1];
+		int n = Integer.parseInt(br.readLine());
+		int[][] map = new int[n + 1][n + 1];
 		
 		for (int i = 1; i < n + 1; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,42 +18,31 @@ public class Main {
 			}
 		}
 		
-		dfs(1, 2, 0); //r시작, c끝
+		long[][][] dp = new long[n + 1][n + 1][3]; //r, c, dir
+		dp[1][2][0] = 1; //(1, 1), (1, 2)
+		
+		for (int r = 1; r < n + 1; r++) {
+			for (int c = 3; c < n + 1; c++) {
+				if (map[r][c] == 1) {
+					continue;
+				}
+				
+				//가로 = 우 + 우하
+				dp[r][c][0] = dp[r][c - 1][0] + dp[r][c - 1][2];
+						
+				//세로 = 하 + 우하
+				dp[r][c][1] = dp[r - 1][c][1] + dp[r - 1][c][2];
+						
+				//대각선 = 우 + 하
+				if (map[r - 1][c] == 0 && map[r][c - 1] == 0) {
+					dp[r][c][2] = dp[r - 1][c - 1][0] + dp[r - 1][c - 1][1] + dp[r - 1][c - 1][2];
+				}
+			}
+		}
+		
+		long count = dp[n][n][0] + dp[n][n][1] + dp[n][n][2];
 		
 		bw.write(count + "");
 		bw.flush();
-	}
-	
-	public static void dfs(int r, int c, int dir) {
-		if (r == n && c == n) {
-			count++;
-			return;
-		}
-		
-		switch(dir) {
-		case 0: //가로
-			if (c + 1 <= n && map[r][c + 1] == 0) {
-				dfs(r, c + 1, 0); //우, 우하
-			}
-			break;
-		case 1: //세로
-			if (r + 1 <= n && map[r + 1][c] == 0) {
-				dfs(r + 1, c, 1); //하, 우하
-			}
-			break;
-		case 2: //대각선
-			if (c + 1 <= n && map[r][c + 1] == 0) {
-				dfs(r, c + 1, 0); //우
-			}
-			
-			if (r + 1 <= n && map[r + 1][c] == 0) {
-				dfs(r + 1, c, 1); //하
-			}
-			break;
-		}
-		
-		if (r + 1 <= n && c + 1 <= n && map[r + 1][c] == 0 && map[r][c + 1] == 0 && map[r + 1][c + 1] == 0) {
-			dfs(r + 1, c + 1, 2); //우하
-		}
 	}
 }
