@@ -1,34 +1,47 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        int N = Integer.parseInt(br.readLine());
-        int[] T = new int[N];
-        int[] P = new int[N];
-        int[] revenue = new int[N + 1];
-
-        for (int i = 0; i < N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            T[i] = Integer.parseInt(st.nextToken());
-            P[i] = Integer.parseInt(st.nextToken());
-        }
-
-        for (int i = 0; i < N; i++) {
-            if (i + T[i] <= N) {
-                revenue[i + T[i]] = Math.max(revenue[i + T[i]], revenue[i] + P[i]);
-            }
-
-            revenue[i + 1] = Math.max(revenue[i + 1], revenue[i]);
-        }
-
-        bw.write(revenue[N] + "\n");
-
-        br.close();
-        bw.flush();
-        bw.close();
-    }
+	static int n;
+	static int[] date;
+	static int[] price;
+	static int maxPrice;
+	static boolean[] visited;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		n = Integer.parseInt(br.readLine());
+		date = new int[n];
+		price = new int[n];
+		
+		for (int i = 0; i < n; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			date[i] = Integer.parseInt(st.nextToken());
+			price[i] = Integer.parseInt(st.nextToken());
+		}
+		
+		visited = new boolean[n];
+		
+		backtracking(0, 0);
+		
+		bw.write(maxPrice + "");
+		bw.flush();
+	}
+	
+	public static void backtracking(int idx, int sumPrice) {
+		if (idx >= n) { //현재 인덱스  >= n (끝까지 탐색한 경우)
+			maxPrice = Math.max(sumPrice, maxPrice);
+			return;
+		}
+		
+		//날짜 포함
+		if (idx + date[idx] <= n) { //현재 인덱스 + 현재 date <= n
+			backtracking(idx + date[idx], sumPrice + price[idx]); //현재 date의 price 더하기
+		}
+		
+		//날짜 미포함
+		backtracking(idx + 1, sumPrice); //다음 인덱스 확인
+	}
 }
