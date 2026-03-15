@@ -11,17 +11,12 @@ public class Main {
 		
 		for (int i = 0; i < n; i++) {
 			String input = br.readLine();
+			int idx = input.lastIndexOf('.');
 			
-			for (int j = 0; j < input.length(); j++) {
-				if (input.charAt(j) == '.') {
-					String str = "";
-					for (int k = j + 1; k < input.length(); k++) {
-						str += input.charAt(k);
-					}
-					
-					m.put(str, m.getOrDefault(str, 0) + 1);
-				}
-			}
+			if (idx != -1) {
+				String str = input.substring(idx + 1);
+				m.put(str, m.getOrDefault(str, 0) + 1);
+            }
 		}
 		
 		ArrayList<String> list = new ArrayList<>(m.keySet());
@@ -29,8 +24,7 @@ public class Main {
 		Collections.sort(list);
 		
 		for (String k : list) {
-			int count = m.get(k);
-			sb.append(k + " " + count + "\n");
+			sb.append(k + " " + m.get(k) + "\n");
 		}
 		
 		bw.write(sb.toString());
